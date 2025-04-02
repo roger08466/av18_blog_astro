@@ -1,0 +1,212 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { videoApi } from '../../api/api.js';
+import VideoCard from '../../components/VideoCard/index.jsx';
+import VideoCardSkeleton from '../../components/SkeletonComponents/VideoCardSkeleton.jsx';
+
+// 獲取數據
+let videos = [];
+let videosError = null;
+let videosLoading = true;
+
+let tags = [];
+let tagsError = null;
+let tagsLoading = true;
+
+let manufacturers = [];
+let manufacturersError = null;
+let manufacturersLoading = true;
+
+try {
+  const videosData = await videoApi.getVideos({ page: 1, limit: 20 });
+  videos = videosData?.videos || [];
+  videosLoading = false;
+} catch (error) {
+  console.error('Error fetching videos:', error);
+  videosError = error.message || 'Failed to fetch videos';
+  videosLoading = false;
+}
+
+try {
+  const tagsData = await videoApi.getTags();
+  tags = tagsData || [];
+  tagsLoading = false;
+} catch (error) {
+  console.error('Error fetching tags:', error);
+  tagsError = error.message || 'Failed to fetch tags';
+  tagsLoading = false;
+}
+
+try {
+  const manufacturersData = await videoApi.getManufacturers();
+  manufacturers = manufacturersData || [];
+  manufacturersLoading = false;
+} catch (error) {
+  console.error('Error fetching manufacturers:', error);
+  manufacturersError = error.message || 'Failed to fetch manufacturers';
+  manufacturersLoading = false;
+}
+
+// 當前語言 (在客戶端會被覆蓋)
+const currentLanguage = 'tw';
+
+// 翻譯函數 (在客戶端會被覆蓋)
+const t = (key, fallback) => fallback;
+---
+
+<Layout title="AV18 Blog - 分類觀看">
+  <div class="container py-6">
+    <h1 class="text-3xl font-bold mb-8">{t('category.allCategories', '所有分類')}</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- 左側篩選欄 -->
+      <div class="md:col-span-1">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+          <h2 class="text-xl font-semibold mb-4">{t('category.filter', '篩選')}</h2>
+          
+          <!-- 標籤篩選 -->
+          <div class="mb-6">
+            <h3 class="font-medium mb-3">{t('video.tags', '標籤')}</h3>
+            {tagsLoading ? (
+              <div class="space-y-2">
+                {Array(10).fill(0).map((_, index) => (
+                  <div class="h-6 bg-gray-200 rounded animate-pulse"></div>
+                ))}
+              </div>
+            ) : tagsError ? (
+              <p class="text-red-500">{tagsError}</p>
+            ) : (
+              <div class="space-y-1 max-h-60 overflow-y-auto">
+                {tags.slice(0, 20).map((tag) => (
+                  <div class="flex items-center">
+                    <a 
+                      href={`/${currentLanguage}/category/tag/${encodeURIComponent(tag.tag)}`}
+                      class="text-secondary-700 hover:text-gold-600 hover:underline"
+                    >
+                      {tag.tag} <span class="text-gold-600">({tag.video_count})</span>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <!-- 片商篩選 -->
+          <div>
+            <h3 class="font-medium mb-3">{t('video.manufacturer', '片商')}</h3>
+            {manufacturersLoading ? (
+              <div class="space-y-2">
+                {Array(10).fill(0).map((_, index) => (
+                  <div class="h-6 bg-gray-200 rounded animate-pulse"></div>
+                ))}
+              </div>
+            ) : manufacturersError ? (
+              <p class="text-red-500">{manufacturersError}</p>
+            ) : (
+              <div class="space-y-1 max-h-60 overflow-y-auto">
+                {manufacturers.slice(0, 20).map((manufacturer) => (
+                  <div class="flex items-center">
+                    <a 
+                      href={`/${currentLanguage}/category/manufacturer/${encodeURIComponent(manufacturer.manufacturer)}`}
+                      class="text-secondary-700 hover:text-gold-600 hover:underline"
+                    >
+                      {manufacturer.manufacturer} <span class="text-gold-600">({manufacturer.video_count})</span>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      <!-- 右側影片列表 -->
+      <div class="md:col-span-3">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold">{t('home.latestVideos', '最新上傳')}</h2>
+            <div class="flex space-x-2">
+              <button class="px-3 py-1 bg-primary-100 text-secondary-700 rounded-md border border-primary-200 hover:bg-primary-200">
+                {t('category.sortByDate', '按日期')}
+              </button>
+              <button class="px-3 py-1 bg-white text-secondary-700 rounded-md border border-gray-300 hover:bg-gray-100">
+                {t('category.sortByViews', '按觀看次數')}
+              </button>
+            </div>
+          </div>
+          
+          {videosLoading ? (
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {Array(12).fill(0).map((_, index) => (
+                <VideoCardSkeleton client:visible />
+              ))}
+            </div>
+          ) : videosError ? (
+            <div class="text-center py-8">
+              <p class="text-red-500 mb-4">{videosError}</p>
+              <button
+                onclick="window.location.reload()"
+                class="px-4 py-2 bg-gold-600 text-white rounded-md hover:bg-gold-700"
+              >
+                {t('common.retry', '重試')}
+              </button>
+            </div>
+          ) : (
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {videos.map((video, index) => (
+                <VideoCard
+                  video={video}
+                  priority={index < 6}
+                  client:visible
+                />
+              ))}
+            </div>
+          )}
+          
+          {/* 分頁 */}
+          <div class="mt-8 flex justify-center">
+            <div class="flex space-x-2">
+              <button class="px-4 py-2 bg-white text-secondary-700 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                {t('pagination.prev', '上一頁')}
+              </button>
+              <button class="px-4 py-2 bg-primary-100 text-secondary-700 rounded-md border border-primary-200 hover:bg-primary-200">
+                1
+              </button>
+              <button class="px-4 py-2 bg-white text-secondary-700 rounded-md border border-gray-300 hover:bg-gray-100">
+                2
+              </button>
+              <button class="px-4 py-2 bg-white text-secondary-700 rounded-md border border-gray-300 hover:bg-gray-100">
+                3
+              </button>
+              <button class="px-4 py-2 bg-white text-secondary-700 rounded-md border border-gray-300 hover:bg-gray-100">
+                {t('pagination.next', '下一頁')}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 客戶端腳本，用於處理 i18n 和動態內容
+    import i18n from '../../i18n';
+    import { localizedLink } from '../../utils/linkHelper';
+
+    // 獲取當前語言
+    const currentLanguage = i18n.language || 'tw';
+    
+    // 更新所有語言相關的元素
+    document.querySelectorAll('a[href^="/tw/"], a[href^="/cn/"], a[href^="/en/"]').forEach(link => {
+      const path = link.getAttribute('href').replace(/^\/[a-z]{2}\//, '');
+      link.setAttribute('href', `/${currentLanguage}/${path}`);
+    });
+
+    // 翻譯所有帶有 data-i18n 屬性的元素
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const fallback = el.textContent;
+      el.textContent = i18n.t(key, fallback);
+    });
+  </script>
+</Layout>

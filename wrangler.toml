@@ -1,0 +1,8 @@
+name = "cloudflare-video-site"
+
+[build]
+command = "npm install && npm run build"
+output_directory = "dist"
+
+# 添加 Pages 配置
+pages_build_output_dir = "dist"

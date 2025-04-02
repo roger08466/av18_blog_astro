@@ -1,0 +1,10 @@
+---
+// 繁體中文首頁路由
+
+// 設定當前語言
+const lang = 'tw';
+
+// 重定向到主頁
+Astro.response.status = 301;
+Astro.response.headers.set('Location', `/${lang}`);
+---

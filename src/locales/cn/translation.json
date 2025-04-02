@@ -1,0 +1,80 @@
+{
+  "common": {
+    "appName": "JavPlay.tv",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "retry": "重试",
+    "viewMore": "查看更多",
+    "viewAll": "查看全部",
+    "back": "返回",
+    "search": "搜索",
+    "noResults": "没有找到结果",
+    "pageNotFound": "找不到页面",
+    "selectLanguage": "选择语言",
+    "loadMore": "加载更多"
+  },
+  "nav": {
+    "home": "首页",
+    "categories": "分类观看",
+    "latest": "最新上传",
+    "popular": "热门影片",
+    "language": "语言"
+  },
+  "languages": {
+    "tw": "繁体中文",
+    "cn": "简体中文",
+    "en": "English",
+    "zh-CN": "简体中文"
+  },
+  "home": {
+    "latestVideos": "最新上传",
+    "popularVideos": "热门影片",
+    "featuredManufacturer": "特色片商",
+    "browseByCategory": "按分类浏览",
+    "browseByManufacturer": "按片商浏览",
+    "description": "提供高质量影片内容，包括多种分类和标签。免费在线日本AV影片观看平台。"
+  },
+  "video": {
+    "views": "观看次数",
+    "uploadDate": "上传日期",
+    "releaseDate": "制作日期",
+    "manufacturer": "片商",
+    "tags": "标签",
+    "actors": "演员",
+    "description": "描述",
+    "relatedVideos": "相关影片",
+    "source": "来源",
+    "watchFullVersion": "观看完整版",
+    "code": "番号",
+    "detail": "影片详情"
+  },
+  "category": {
+    "allCategories": "所有分类",
+    "filter": "筛选",
+    "sort": "排序",
+    "sortByDate": "按日期",
+    "sortByViews": "按观看次数",
+    "videosCount": "{{count}} 部影片"
+  },
+  "pagination": {
+    "prev": "上一页",
+    "next": "下一页",
+    "page": "第 {{page}} 页",
+    "of": "共 {{total}} 页"
+  },
+  "player": {
+    "play": "播放",
+    "pause": "暂停",
+    "volume": "音量",
+    "fullscreen": "全屏",
+    "exitFullscreen": "退出全屏",
+    "settings": "设置",
+    "quality": "画质"
+  },
+  "footer": {
+    "quickLinks": "快速链接",
+    "allRightsReserved": "版权所有",
+    "disclaimer": "本网站提供免费日本成人影片观看，所有内容均来自互联网公开资源。",
+    "adultContent": "本网站含有成人内容，未满18岁请勿浏览。"
+  }
+}

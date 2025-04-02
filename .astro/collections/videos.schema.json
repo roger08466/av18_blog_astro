@@ -1,0 +1,103 @@
+{
+  "$ref": "#/definitions/videos",
+  "definitions": {
+    "videos": {
+      "type": "object",
+      "properties": {
+        "hid": {
+          "type": "string"
+        },
+        "barcode": {
+          "type": "string"
+        },
+        "thumbnail_small": {
+          "type": "string",
+          "format": "uri"
+        },
+        "thumbnail_large": {
+          "type": "string",
+          "format": "uri"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "upload_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "production_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "views": {
+          "type": "number",
+          "default": 0
+        },
+        "title": {
+          "type": "string"
+        },
+        "tags": {
+          "allOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "default": []
+        },
+        "actors": {
+          "$ref": "#/definitions/videos/properties/tags",
+          "default": []
+        },
+        "video_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "source": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hid",
+        "upload_date",
+        "title",
+        "tags",
+        "actors"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,219 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { videoApi } from '../../api/api.js';
+import VideoCard from '../../components/VideoCard/index.jsx';
+import VideoCardSkeleton from '../../components/SkeletonComponents/VideoCardSkeleton.jsx';
+
+// 獲取動態路由參數
+const { lang } = Astro.params;
+
+// 檢查語言是否有效
+const validLangs = ['tw', 'cn', 'en'];
+if (!validLangs.includes(lang)) {
+  return Astro.redirect('/tw');
+}
+
+// 獲取數據
+let latestVideos = [];
+let latestVideosError = null;
+let latestVideosLoading = true;
+
+let tags = [];
+let tagsError = null;
+let tagsLoading = true;
+
+let manufacturers = [];
+let manufacturersError = null;
+let manufacturersLoading = true;
+
+try {
+  const latestVideosData = await videoApi.getLatestVideos(10);
+  latestVideos = latestVideosData || [];
+  latestVideosLoading = false;
+} catch (error) {
+  console.error('Error fetching latest videos:', error);
+  latestVideosError = error.message || 'Failed to fetch latest videos';
+  latestVideosLoading = false;
+}
+
+try {
+  const tagsData = await videoApi.getTags();
+  tags = tagsData || [];
+  tagsLoading = false;
+} catch (error) {
+  console.error('Error fetching tags:', error);
+  tagsError = error.message || 'Failed to fetch tags';
+  tagsLoading = false;
+}
+
+try {
+  const manufacturersData = await videoApi.getManufacturers();
+  manufacturers = manufacturersData || [];
+  manufacturersLoading = false;
+} catch (error) {
+  console.error('Error fetching manufacturers:', error);
+  manufacturersError = error.message || 'Failed to fetch manufacturers';
+  manufacturersLoading = false;
+}
+
+// 當前語言
+const currentLanguage = lang;
+
+// 翻譯函數 (在客戶端會被覆蓋)
+const t = (key, fallback) => fallback;
+---
+
+<Layout title="AV18 Blog - 首頁">
+  <div class="container py-6">
+    <!-- 最新影片部分 -->
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold" data-i18n="home.latestVideos">{t('home.latestVideos', '最新上傳')}</h2>
+        <a href={`/${currentLanguage}/category`} class="text-gold-600 hover:underline" data-i18n="common.viewMore">
+          {t('common.viewMore', '查看更多')}
+        </a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        {latestVideosLoading ? (
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array(8).fill(0).map((_, index) => (
+              <VideoCardSkeleton client:visible />
+            ))}
+          </div>
+        ) : latestVideosError ? (
+          <div class="text-center py-8">
+            <p class="text-red-500 mb-4">{latestVideosError}</p>
+            <button
+              onclick="window.location.reload()"
+              class="px-4 py-2 bg-gold-600 text-white rounded-md hover:bg-gold-700"
+              data-i18n="common.retry"
+            >
+              {t('common.retry', '重試')}
+            </button>
+          </div>
+        ) : (
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {latestVideos.map((video, index) => (
+              <VideoCard
+                video={video}
+                priority={index < 2}
+                client:visible
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- 標籤部分 -->
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold" data-i18n="home.browseByCategory">{t('home.browseByCategory', '按分類瀏覽')}</h2>
+        <a href={`/${currentLanguage}/category`} class="text-gold-600 hover:underline" data-i18n="common.viewMore">
+          {t('common.viewMore', '查看更多')}
+        </a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        {tagsLoading ? (
+          <div class="flex flex-wrap gap-3">
+            {Array(20).fill(0).map((_, index) => (
+              <div
+                class="px-4 py-2 bg-gray-200 rounded-full animate-pulse"
+                style={`width: ${80 + Math.random() * 60}px; height: 36px;`}
+              ></div>
+            ))}
+          </div>
+        ) : tagsError ? (
+          <div class="text-center py-8">
+            <p class="text-red-500 mb-4">{tagsError}</p>
+            <button
+              onclick="window.location.reload()"
+              class="px-4 py-2 bg-gold-600 text-white rounded-md hover:bg-gold-700"
+              data-i18n="common.retry"
+            >
+              {t('common.retry', '重試')}
+            </button>
+          </div>
+        ) : (
+          <div class="flex flex-wrap gap-3">
+            {tags.map((tag, index) => (
+              <a
+                href={`/${currentLanguage}/category/tag/${encodeURIComponent(tag.tag)}`}
+                class="px-4 py-2 bg-gradient-to-r from-primary-100 to-primary-200 hover:from-primary-200 hover:to-primary-300 border border-gold-400 rounded-full text-secondary-900 transition-colors duration-200 shadow-sm"
+              >
+                {tag.tag} <span class="text-gold-600 font-medium">({tag.video_count})</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- 片商部分 -->
+    <section class="mb-12">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold" data-i18n="home.browseByManufacturer">{t('home.browseByManufacturer', '按片商瀏覽')}</h2>
+        <a href={`/${currentLanguage}/category`} class="text-gold-600 hover:underline" data-i18n="common.viewMore">
+          {t('common.viewMore', '查看更多')}
+        </a>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        {manufacturersLoading ? (
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {Array(12).fill(0).map((_, index) => (
+              <div class="p-4 bg-white shadow-md rounded-lg animate-pulse">
+                <div class="h-6 bg-gray-200 rounded w-4/5 mx-auto"></div>
+                <div class="h-4 bg-gray-200 rounded w-3/5 mx-auto mt-2"></div>
+              </div>
+            ))}
+          </div>
+        ) : manufacturersError ? (
+          <div class="text-center py-8">
+            <p class="text-red-500 mb-4">{manufacturersError}</p>
+            <button
+              onclick="window.location.reload()"
+              class="px-4 py-2 bg-gold-600 text-white rounded-md hover:bg-gold-700"
+              data-i18n="common.retry"
+            >
+              {t('common.retry', '重試')}
+            </button>
+          </div>
+        ) : (
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {manufacturers.map((manufacturer, index) => (
+              <a
+                href={`/${currentLanguage}/category/manufacturer/${encodeURIComponent(manufacturer.manufacturer)}`}
+                class="p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow text-center border border-gold-400 hover:border-gold-600"
+              >
+                <div class="font-medium">{manufacturer.manufacturer}</div>
+                <div class="text-sm text-gold-600">
+                  {manufacturer.video_count} <span data-i18n="category.videosCount">部影片</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+
+  <script define:vars={{ currentLanguage }}>
+    // 客戶端腳本，用於處理 i18n 和動態內容
+    import i18n from '../../i18n';
+    
+    // 設置當前語言
+    if (i18n.language !== currentLanguage) {
+      i18n.changeLanguage(currentLanguage);
+      localStorage.setItem('i18nextLng', currentLanguage);
+    }
+    
+    // 翻譯所有帶有 data-i18n 屬性的元素
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        const fallback = el.textContent;
+        el.textContent = i18n.t(key, fallback);
+      }
+    });
+  </script>
+</Layout>

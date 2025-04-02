@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# 禁止爬蟲訪問某些路徑
+Disallow: /api/
+Disallow: /build/
+Disallow: /assets/
+Disallow: /_routes.json
+
+# 允許爬蟲訪問的重要路徑
+Allow: /tw/
+Allow: /cn/
+Allow: /en/
+Allow: /video/
+Allow: /category/
+
+# 語系特定設置
+# 繁體中文
+Allow: /tw/*
+# 簡體中文
+Allow: /cn/*
+# 英文
+Allow: /en/*
+
+# Sitemap位置
+Sitemap: https://javplay.tv/sitemap.xml
+
+# 網站所有者
+# JavPlay.tv - 免費線上日本AV影片觀看平台

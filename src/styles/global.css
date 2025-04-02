@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定義樣式 */
+@layer base {
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+  
+  .btn {
+    @apply px-4 py-2 font-medium rounded-md transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600 border border-primary-600;
+  }
+  
+  .btn-secondary {
+    @apply bg-gold-600 text-white hover:bg-gold-700 border border-gold-700;
+  }
+  
+  .card {
+    @apply overflow-hidden bg-white rounded-lg shadow-md;
+  }
+  
+  .video-card {
+    @apply overflow-hidden transition-transform duration-300 bg-white rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1 border border-primary-200 hover:border-gold-500;
+  }
+  
+  .video-thumbnail {
+    @apply relative overflow-hidden;
+    /* 使用固定的寬高比，但保持等比例 */
+    padding-top: 67.25%; /* 根據圖片尺寸 800 × 538 計算得出 */
+  }
+  
+  .video-thumbnail img {
+    @apply absolute top-0 left-0 object-cover w-full h-full;
+  }
+  
+  .video-info {
+    @apply p-4;
+  }
+  
+  .video-title {
+    @apply mb-2 text-lg font-medium line-clamp-2;
+  }
+  
+  .video-meta {
+    @apply text-sm text-gray-500;
+  }
+  
+  .tag {
+    @apply inline-block px-2 py-1 mr-2 mb-1 text-xs text-secondary-900 bg-primary-100 rounded-full border border-gold-400;
+  }
+}

@@ -1,48 +1,58 @@
-# Astro Starter Kit: Basics
+# AV18 Blog - Astro 版本
 
-```sh
-npm create astro@latest -- --template basics
+這是使用 Astro 框架重構的 AV18 Blog 網站。
+
+## 技術棧
+
+- [Astro](https://astro.build/) - 靜態網站生成器
+- [React](https://reactjs.org/) - UI 組件
+- [Tailwind CSS](https://tailwindcss.com/) - 樣式
+- [i18next](https://www.i18next.com/) - 國際化
+
+## 功能
+
+- 多語言支持 (繁體中文、簡體中文、英文)
+- 影片分類瀏覽
+- 影片詳情頁面
+- 響應式設計
+
+## 開發
+
+```bash
+# 安裝依賴
+npm install
+
+# 啟動開發服務器
+npm run dev
+
+# 構建生產版本
+npm run build
+
+# 預覽生產版本
+npm run preview
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 部署
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+本項目使用 Cloudflare Pages 進行部署。
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+```bash
+# 部署到 Cloudflare Pages
+npm run deploy
+```
 
-## 🚀 Project Structure
+## 項目結構
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
+```
 /
-├── public/
-│   └── favicon.svg
+├── public/             # 靜態資源
 ├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+│   ├── api/            # API 客戶端
+│   ├── assets/         # 圖片和其他資源
+│   ├── components/     # React 組件
+│   ├── layouts/        # 頁面布局
+│   ├── pages/          # 頁面
+│   ├── utils/          # 工具函數
+│   └── i18n.js         # 國際化配置
+├── functions/          # Cloudflare Functions
+└── package.json        # 項目配置

@@ -1,0 +1,56 @@
+https://cloudflare-video-site.pages.dev/*
+  X-Robots-Tag: noindex
+
+# 自定義域名優化設置
+https://javplay.tv/*
+  # SEO 設置
+  X-Robots-Tag: all
+  
+  # 緩存設置 - 生產環境優化
+  # HTML 文件 - 短期緩存，確保內容更新能及時反映
+  Cache-Control: public, max-age=600, s-maxage=1800, stale-while-revalidate=86400
+  
+  # 安全設置
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  
+  # Cloudflare 優化設置
+  CF-Rocket-Loader: off
+  
+  # 跨域資源共享 (CORS)
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+  Access-Control-Max-Age: 86400
+  
+  # 性能監控
+  Timing-Allow-Origin: *
+
+# 靜態資源緩存設置 - 長期緩存
+https://javplay.tv/*.js
+  Cache-Control: public, max-age=31536000, immutable
+  
+https://javplay.tv/*.css
+  Cache-Control: public, max-age=31536000, immutable
+  
+https://javplay.tv/*.jpg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+https://javplay.tv/*.jpeg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+https://javplay.tv/*.png
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+https://javplay.tv/*.gif
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+https://javplay.tv/*.webp
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+https://javplay.tv/*.svg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+https://javplay.tv/*.ico
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400

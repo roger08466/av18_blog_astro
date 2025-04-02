@@ -1,0 +1,81 @@
+{
+  "common": {
+    "appName": "JavPlay.tv",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "viewMore": "View More",
+    "viewAll": "View All",
+    "back": "Back",
+    "search": "Search",
+    "noResults": "No results found",
+    "pageNotFound": "Page not found",
+    "selectLanguage": "Select Language",
+    "loadMore": "Load More"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Browse Categories",
+    "latest": "Latest Uploads",
+    "popular": "Popular Videos",
+    "language": "Language"
+  },
+  "languages": {
+    "tw": "Traditional Chinese",
+    "cn": "Simplified Chinese",
+    "en": "English",
+    "en-US": "English",
+    "en-GB": "English"
+  },
+  "home": {
+    "latestVideos": "Latest Uploads",
+    "popularVideos": "Popular Videos",
+    "featuredManufacturer": "Featured Studio",
+    "browseByCategory": "Browse by Category",
+    "browseByManufacturer": "Browse by Studio",
+    "description": "Provides high-quality video content with various categories and tags. Free online Japanese AV video viewing platform."
+  },
+  "video": {
+    "views": "Views",
+    "uploadDate": "Upload Date",
+    "releaseDate": "Release Date",
+    "manufacturer": "Studio",
+    "tags": "Tags",
+    "actors": "Actresses",
+    "description": "Description",
+    "relatedVideos": "Related Videos",
+    "source": "Source",
+    "watchFullVersion": "Watch Full Version",
+    "code": "Video Code",
+    "detail": "Video Details"
+  },
+  "category": {
+    "allCategories": "All Categories",
+    "filter": "Filter",
+    "sort": "Sort",
+    "sortByDate": "By Date",
+    "sortByViews": "By Views",
+    "videosCount": "{{count}} videos"
+  },
+  "pagination": {
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {{page}}",
+    "of": "of {{total}}"
+  },
+  "player": {
+    "play": "Play",
+    "pause": "Pause",
+    "volume": "Volume",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit Fullscreen",
+    "settings": "Settings",
+    "quality": "Quality"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "allRightsReserved": "All Rights Reserved",
+    "disclaimer": "This website provides free Japanese adult videos for viewing. All content is sourced from publicly available resources on the internet.",
+    "adultContent": "This website contains adult content. Visitors under 18 years of age are not permitted."
+  }
+}

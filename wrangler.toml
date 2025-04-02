@@ -1,4 +1,4 @@
-name = "cloudflare-video-site"
+name = "av18-blog-astro"
 
 [build]
 command = "npm install && npm run build"

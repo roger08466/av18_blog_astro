@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "npm run build && cp -r functions dist/ && wrangler pages publish dist --project-name=cloudflare-video-site"
+    "deploy": "npm run build && cp -r functions dist/ && wrangler pages publish dist --project-name=av18-blog-astro"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.3",

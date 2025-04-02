@@ -1,0 +1,20 @@
+{
+  "name": "av18-blog-astro",
+  "build": {
+    "command": "npm run build",
+    "output_directory": "dist",
+    "root_directory": "/"
+  },
+  "routes": [
+    {
+      "pattern": "/api/*",
+      "script": "api/index.js"
+    },
+    {
+      "pattern": "/*",
+      "script": "functions/_middleware.js"
+    }
+  ],
+  "compatibility_date": "2023-04-01",
+  "compatibility_flags": ["nodejs_compat"]
+}
